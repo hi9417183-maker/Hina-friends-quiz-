@@ -261,30 +261,6 @@ name+" your score is "+score+"/8 <br><br>"+message;
 
 }
 
-/* hearts animation */
-
-setInterval(()=>{
-
-let heart=document.createElement("div");
-
-heart.className="heart";
-
-heart.innerHTML="💗";
-
-heart.style.left=Math.random()*100+"vw";
-
-heart.style.fontSize=(Math.random()*10+15)+"px";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-
-heart.remove();
-
-},6000);
-
-},600);
-
 </script>
 
 </body>
