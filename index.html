@@ -1,10 +1,100 @@
-id="question"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How well do you know Hina?</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+background:linear-gradient(135deg,#ffd6e8,#ffffff);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+}
+
+.container{
+background:white;
+padding:25px;
+width:90%;
+max-width:420px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+h1{
+color:#ff4fa3;
+}
+
+button{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:none;
+border-radius:10px;
+background:#ffe4f2;
+cursor:pointer;
+}
+
+button:hover{
+background:#ffb6d8;
+}
+
+.start{
+background:#ff6fb5;
+color:white;
+}
+
+input{
+padding:10px;
+border-radius:10px;
+border:1px solid #ccc;
+width:80%;
+}
+
+#leaderboard{
+margin-top:20px;
+text-align:left;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>How well do you know Hina? 💗</h1>
+
+<div id="start">
+
+<p>Enter your name</p>
+
+<input id="username" placeholder="Your name">
+
+<br><br>
+
+<button class="start" onclick="startQuiz()">Start Quiz</button>
+
+</div>
+
+<div id="quiz" style="display:none">
+
+<div id="question"></div>
 
 <div id="answers"></div>
 
 </div>
 
 <div id="result"></div>
+
+<div id="leaderboard"></div>
 
 </div>
 
@@ -31,7 +121,7 @@ c:0
 },
 
 {
-q:"Agr mujhe in mn se aik choose karna pade?",
+q:"Agr mujhe aik choose karna pade?",
 a:["Money","Love","Peace"],
 c:2
 },
@@ -44,7 +134,7 @@ c:2
 
 {
 q:"Mujhe kis tarha ke log pasand hain?",
-a:["Jo mujh per trust karte hon","Jo mujhe judge na kare","Jo mujhe value dein"],
+a:["Jo mujh par trust kare","Jo mujhe judge na kare","Jo mujhe value dein"],
 c:1
 },
 
@@ -86,7 +176,7 @@ function showQuestion(){
 
 let q=questions[current];
 
-document.getElementById("question").innerHTML=q.q;
+document.getElementById("question").innerHTML="<h3>"+q.q+"</h3>";
 
 let options="";
 
@@ -98,5 +188,360 @@ options+=`<button onclick="answer(${i})">${opt}</button>`;
 
 document.getElementById("answers").innerHTML=options;
 
-}</html>
-  
+}
+
+function answer(i){
+
+if(i==questions[current].c){
+
+score++;
+
+}
+
+current++;
+
+if(current<questions.length){
+
+showQuestion();
+
+}else{
+
+showResult();
+
+}
+
+}
+
+function showResult(){
+
+document.getElementById("quiz").style.display="none";
+
+let message="";
+
+if(score>=6){
+
+message="Wow! You really know me well 🫶";
+
+}else{
+
+message="Hmm… lagta hai mujhe aur samajhne ki zarurat hai 😅";
+
+}
+
+document.getElementById("result").innerHTML=
+
+"<h3>"+name+" your score is "+score+"/8</h3>"+message;
+
+saveScore();
+
+showLeaderboard();
+
+}
+
+function saveScore(){
+
+let scores=JSON.parse(localStorage.getItem("hinaQuiz")) || [];
+
+scores.push({name:name,score:score});
+
+scores.sort((a,b)=>b.score-a.score);
+
+localStorage.setItem("hinaQuiz",JSON.stringify(scores));
+
+}
+
+function showLeaderboard(){
+
+let scores=JSON.parse(localStorage.getItem("hinaQuiz")) || [];
+
+let html="<h3>🏆 Leaderboard</h3>";
+
+scores.slice(0,10).forEach((s,i)=>{
+
+html+= (i+1)+". "+s.name+" - "+s.score+"/8 <br>";
+
+});
+
+document.getElementById("leaderboard").innerHTML=html;
+
+}
+
+showLeaderboard();
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How well do you know Hina?</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+background:linear-gradient(135deg,#ffd6e8,#ffffff);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+}
+
+.container{
+background:white;
+padding:25px;
+width:90%;
+max-width:420px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+h1{
+color:#ff4fa3;
+}
+
+button{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:none;
+border-radius:10px;
+background:#ffe4f2;
+cursor:pointer;
+}
+
+button:hover{
+background:#ffb6d8;
+}
+
+.start{
+background:#ff6fb5;
+color:white;
+}
+
+input{
+padding:10px;
+border-radius:10px;
+border:1px solid #ccc;
+width:80%;
+}
+
+#leaderboard{
+margin-top:20px;
+text-align:left;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>How well do you know Hina? 💗</h1>
+
+<div id="start">
+
+<p>Enter your name</p>
+
+<input id="username" placeholder="Your name">
+
+<br><br>
+
+<button class="start" onclick="startQuiz()">Start Quiz</button>
+
+</div>
+
+<div id="quiz" style="display:none">
+
+<div id="question"></div>
+
+<div id="answers"></div>
+
+</div>
+
+<div id="result"></div>
+
+<div id="leaderboard"></div>
+
+</div>
+
+<script>
+
+let questions=[
+
+{
+q:"Meri vibes in mn se kon si hai?",
+a:["Baddie Vibes","Mixed Vibes","Desi Vibes"],
+c:1
+},
+
+{
+q:"Mujhe sab se zayada kya karna pasand hai?",
+a:["Mobile use Karna","Books padhna","Baatein karna"],
+c:2
+},
+
+{
+q:"Meri personality kya hai?",
+a:["Introverted","Extroverted","Both"],
+c:0
+},
+
+{
+q:"Agr mujhe aik choose karna pade?",
+a:["Money","Love","Peace"],
+c:2
+},
+
+{
+q:"Mujhe sab se zayada gussa kis baat per aata hai?",
+a:["Jab koi meri baat na sune","Jab koi disturb kare","Jab koi judge kare"],
+c:2
+},
+
+{
+q:"Mujhe kis tarha ke log pasand hain?",
+a:["Jo mujh par trust kare","Jo mujhe judge na kare","Jo mujhe value dein"],
+c:1
+},
+
+{
+q:"Main zyada kis cheez ko prefer karti hun?",
+a:["Chatting","Calls","Voice messages"],
+c:2
+},
+
+{
+q:"Mera favourite food kya hai?",
+a:["Biryani","Ice cream","Burger"],
+c:0
+}
+
+];
+
+let current=0;
+let score=0;
+let name="";
+
+function startQuiz(){
+
+name=document.getElementById("username").value;
+
+if(name==""){
+alert("Please enter your name");
+return;
+}
+
+document.getElementById("start").style.display="none";
+document.getElementById("quiz").style.display="block";
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+let q=questions[current];
+
+document.getElementById("question").innerHTML="<h3>"+q.q+"</h3>";
+
+let options="";
+
+q.a.forEach((opt,i)=>{
+
+options+=`<button onclick="answer(${i})">${opt}</button>`;
+
+});
+
+document.getElementById("answers").innerHTML=options;
+
+}
+
+function answer(i){
+
+if(i==questions[current].c){
+
+score++;
+
+}
+
+current++;
+
+if(current<questions.length){
+
+showQuestion();
+
+}else{
+
+showResult();
+
+}
+
+}
+
+function showResult(){
+
+document.getElementById("quiz").style.display="none";
+
+let message="";
+
+if(score>=6){
+
+message="Wow! You really know me well 🫶";
+
+}else{
+
+message="Hmm… lagta hai mujhe aur samajhne ki zarurat hai 😅";
+
+}
+
+document.getElementById("result").innerHTML=
+
+"<h3>"+name+" your score is "+score+"/8</h3>"+message;
+
+saveScore();
+
+showLeaderboard();
+
+}
+
+function saveScore(){
+
+let scores=JSON.parse(localStorage.getItem("hinaQuiz")) || [];
+
+scores.push({name:name,score:score});
+
+scores.sort((a,b)=>b.score-a.score);
+
+localStorage.setItem("hinaQuiz",JSON.stringify(scores));
+
+}
+
+function showLeaderboard(){
+
+let scores=JSON.parse(localStorage.getItem("hinaQuiz")) || [];
+
+let html="<h3>🏆 Leaderboard</h3>";
+
+scores.slice(0,10).forEach((s,i)=>{
+
+html+= (i+1)+". "+s.name+" - "+s.score+"/8 <br>";
+
+});
+
+document.getElementById("leaderboard").innerHTML=html;
+
+}
+
+showLeaderboard();
+
+</script>
+
+</body>
+</html>
